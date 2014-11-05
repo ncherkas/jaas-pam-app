@@ -1,7 +1,11 @@
 package com.ncherkas.jaasPamApp.authentication;
 
+import com.google.common.base.Strings;
+
 import javax.security.auth.callback.*;
 import java.io.IOException;
+
+import static com.google.common.base.Preconditions.*;
 
 /**
  * Created by n.cherkas on 11/5/14 7:34 AM.
@@ -12,6 +16,8 @@ public class LoginContextCallbackHandler implements CallbackHandler {
     private final String password;
 
     public LoginContextCallbackHandler(String login, String password) {
+        checkArgument(!Strings.isNullOrEmpty(login));
+        checkArgument(password != null);
         this.login = login;
         this.password = password;
     }
@@ -24,13 +30,13 @@ public class LoginContextCallbackHandler implements CallbackHandler {
                 TextOutputCallback toc = (TextOutputCallback) callback;
                 switch (toc.getMessageType()) {
                     case TextOutputCallback.INFORMATION:
-                        System.out.println("INFORMATION: " + toc.getMessage());
+                        System.out.println("JPAM::INFORMATION: " + toc.getMessage());
                         break;
                     case TextOutputCallback.ERROR:
-                        System.out.println("ERROR: " + toc.getMessage());
+                        System.err.println("JPAM::ERROR: " + toc.getMessage());
                         break;
                     case TextOutputCallback.WARNING:
-                        System.out.println("WARNING: " + toc.getMessage());
+                        System.out.println("JPAM::WARNING: " + toc.getMessage());
                         break;
                     default:
                         throw new IOException("Unsupported message type: " + toc.getMessageType());
@@ -44,7 +50,7 @@ public class LoginContextCallbackHandler implements CallbackHandler {
                 PasswordCallback pc = (PasswordCallback) callback;
                 pc.setPassword(password.toCharArray());
             } else {
-                throw new UnsupportedCallbackException(callback, "Unrecognized Callback");
+                throw new UnsupportedCallbackException(callback, "JPAM::Unrecognized Callback");
             }
         }
     }
