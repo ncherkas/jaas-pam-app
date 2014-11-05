@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class App {
 
     @RequestMapping("/")
-    public @ResponseBody String home() {
+    public String home() {
         return "Hello, World!";
     }
 
