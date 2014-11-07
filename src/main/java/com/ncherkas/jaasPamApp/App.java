@@ -3,7 +3,8 @@ package com.ncherkas.jaasPamApp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ImportResource;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,14 +12,21 @@ import org.springframework.web.bind.annotation.RestController;
  * Hello world!
  */
 @EnableAutoConfiguration
-// @EnableWebSecurity
 @ImportResource("classpath:security.xml")
 @RestController
 public class App {
 
     @RequestMapping("/")
     public String home() {
-        return "Hello, World!";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        return "Hello, " + username + "!";
+    }
+
+    @RequestMapping("/info")
+    public String info() {
+        return "Info";
     }
 
     public static void main(String[] args) {

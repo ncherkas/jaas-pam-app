@@ -1,4 +1,4 @@
-package com.ncherkas.jaasPamApp.authentication;
+package com.ncherkas.jaasPamApp.examples;
 
 import com.google.common.base.Strings;
 
