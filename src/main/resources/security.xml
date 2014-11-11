@@ -7,13 +7,13 @@
             http://www.springframework.org/schema/security
             http://www.springframework.org/schema/security/spring-security.xsd">
 
-    <security:http create-session="never">
+    <security:http create-session="stateless">
         <security:intercept-url pattern="/**" access="ROLE_USER" />
         <security:http-basic />
     </security:http>
 
     <security:authentication-manager erase-credentials="true">
-        <security:authentication-provider ref="jaasPamAuthenticationProvider"/>
+        <security:authentication-provider ref="jaasPamAuthenticationProvider" user-service-ref="userDetailsService"/>
     </security:authentication-manager>
 
     <bean id="jaasPamAuthenticationProvider" class="com.ncherkas.jaasPamApp.JaasAuthenticationProviderEx">
@@ -31,5 +31,7 @@
             </list>
         </property>
     </bean>
+
+    <bean id="userDetailsService" class="com.ncherkas.jaasPamApp.UserDetailsServiceImpl"/>
 
 </beans>
