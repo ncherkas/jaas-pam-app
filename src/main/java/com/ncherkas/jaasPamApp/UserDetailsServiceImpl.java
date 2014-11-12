@@ -8,7 +8,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.*;
 
 /**
- * Service provides info about users known to the application. This service can be implemented using database.
+ * This service provides info about users known to the application. In other words this service provides info about
+ * users of the Unix system this application is running on. Username here must be equal to login of Unix user.
+ * This service can be implemented using database.
  *
  * Created by n.cherkas on 11/11/14 7:08 AM.
  */
