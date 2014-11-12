@@ -9,6 +9,7 @@ import javax.security.auth.login.LoginException;
 import static com.google.common.base.Preconditions.*;
 
 /**
+ * Example of JAAS PAM API usage.
  * Created by n.cherkas on 11/5/14 7:31 AM.
  */
 public class JaasPamAuthentication {

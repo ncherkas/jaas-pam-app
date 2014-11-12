@@ -1,23 +1,26 @@
 package com.ncherkas.jaasPamApp;
 
-import com.google.common.base.Preconditions;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
+ * Service provides info about users known to the application. This service can be implemented using database.
+ *
  * Created by n.cherkas on 11/11/14 7:08 AM.
  */
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private static final Map<String, UserData> USERS = Collections.unmodifiableMap(new HashMap<String, UserData>() {{
-        put("app_usr", new UserData("app_usr", "app_usr@host.com"));
+        /**
+         * Authorization is made using roles set by {@code JPamAuthorityGranter} so the value set here in
+         * {@code SimpleGrantedAuthority} is not used
+         */
+        put("app_usr1", new UserData("app_usr1", "app_usr1@host.com", new SimpleGrantedAuthority("ROLE_USER")));
+        put("app_usr2", new UserData("app_usr2", "app_usr2@host.com", new SimpleGrantedAuthority("ROLE_USER")));
     }});
 
     @Override
@@ -27,57 +30,5 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("Unknown user '" + username + "'");
         }
         return userData;
-    }
-
-    public static class UserData implements UserDetails {
-
-        private final String username;
-        private final String email;
-
-        public UserData(String username, String email) {
-            Preconditions.checkArgument(username != null);
-            Preconditions.checkArgument(email != null);
-            this.username = username;
-            this.email = email;
-        }
-
-        @Override
-        public Collection<? extends GrantedAuthority> getAuthorities() {
-            return null;
-        }
-
-        @Override
-        public String getPassword() {
-            return null;
-        }
-
-        @Override
-        public String getUsername() {
-            return username;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        @Override
-        public boolean isAccountNonExpired() {
-            return true;
-        }
-
-        @Override
-        public boolean isAccountNonLocked() {
-            return true;
-        }
-
-        @Override
-        public boolean isCredentialsNonExpired() {
-            return true;
-        }
-
-        @Override
-        public boolean isEnabled() {
-            return true;
-        }
     }
 }

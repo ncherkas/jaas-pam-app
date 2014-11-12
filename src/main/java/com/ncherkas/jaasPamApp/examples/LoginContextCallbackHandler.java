@@ -8,6 +8,7 @@ import java.io.IOException;
 import static com.google.common.base.Preconditions.*;
 
 /**
+ * Example of JAAS PAM API usage.
  * Created by n.cherkas on 11/5/14 7:34 AM.
  */
 public class LoginContextCallbackHandler implements CallbackHandler {

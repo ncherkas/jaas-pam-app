@@ -13,11 +13,13 @@
     </security:http>
 
     <security:authentication-manager erase-credentials="true">
-        <security:authentication-provider ref="jaasPamAuthenticationProvider" user-service-ref="userDetailsService"/>
+        <security:authentication-provider ref="jaasPamAuthenticationProvider" />
     </security:authentication-manager>
 
     <bean id="jaasPamAuthenticationProvider" class="com.ncherkas.jaasPamApp.JaasAuthenticationProviderEx">
+        <!-- JAAS config -->
         <property name="loginConfig" value="classpath:.java.login.config"/>
+        <!-- Name of entry from JAAS config -->
         <property name="loginContextName" value="net-sf-jpam"/>
         <property name="callbackHandlers">
             <list>
@@ -30,6 +32,8 @@
                 <bean class="com.ncherkas.jaasPamApp.JPamAuthorityGranter"/>
             </list>
         </property>
+        <!-- Provides "first" phase of authentication -->
+        <property name="userDetailsService" ref="userDetailsService" />
     </bean>
 
     <bean id="userDetailsService" class="com.ncherkas.jaasPamApp.UserDetailsServiceImpl"/>
